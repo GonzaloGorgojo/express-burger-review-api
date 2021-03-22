@@ -25,6 +25,6 @@ You will need to set the Enviroment Variables with your own data.
 
 ### C4 Diagram
 
-![C4 Diagram](https://github.com/GonzaloGorgojo/BurguerProject_BackEnd-API/tree/master/public/img/c4.png "C4 Diagram")
+![C4 Diagram](https://github.com/GonzaloGorgojo/BurguerProject_BackEnd-API/blob/master/public/img/c4.png "C4 Diagram")
 
 #### This was made by [Gonzalo Gorgojo!](https://www.linkedin.com/in/gonzalogorgojo/), feel free to contact me for everything you need !
