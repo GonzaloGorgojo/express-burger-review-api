@@ -3,7 +3,7 @@ const express = require("express");
 const { json } = require("express");
 const router = express.Router();
 
-router.get("/reviews", (req, res) => {
+router.get("/api/reviews", (req, res) => {
   BurgerModel.find({})
     .select("userName shop country burger ranking comment -_id")
     .then((doc) => {
@@ -14,7 +14,7 @@ router.get("/reviews", (req, res) => {
     });
 });
 
-router.get("/review/:userName", (req, res) => {
+router.get("/api/review/:userName", (req, res) => {
   if (!req.params.userName) {
     return res
       .status(400)
@@ -36,7 +36,7 @@ router.get("/review/:userName", (req, res) => {
     });
 });
 
-router.post("/review", (req, res) => {
+router.post("/api/review", (req, res) => {
   let model = new BurgerModel(req.body);
   model
     .save()
@@ -52,7 +52,7 @@ router.post("/review", (req, res) => {
     });
 });
 
-router.put("/review/:_id", (req, res) => {
+router.put("/api/review/:_id", (req, res) => {
   if (!req.params._id) {
     return res
       .status(400)
@@ -75,7 +75,7 @@ router.put("/review/:_id", (req, res) => {
     });
 });
 
-router.delete("/review/:_id", (req, res) => {
+router.delete("/api/review/:_id", (req, res) => {
   if (!req.params._id) {
     return res
       .status(400)
