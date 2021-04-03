@@ -23,6 +23,7 @@ const BurgerSchema = new mongoose.Schema({
   burger: { type: String, required: true },
   ranking: { type: Number, required: true, min: 0, max: 100 },
   comment: { type: String },
+  status: { type: Number, default: 1 },
 });
 
 module.exports = mongoose.model("reviews", BurgerSchema);
