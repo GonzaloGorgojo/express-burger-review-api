@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/api/reviews", (req, res) => {
   BurgerModel.find({})
-    .select("userName shop country burger ranking comment -_id")
+    .select("userName shop country burger ranking comment status -_id")
     .then((doc) => {
       res.json(doc);
     })
@@ -23,7 +23,7 @@ router.get("/api/review/:userName", (req, res) => {
   BurgerModel.findOne({
     userName: req.params.userName,
   })
-    .select("userName shop country burger ranking comment -_id")
+    .select("userName shop country burger ranking comment status -_id")
     .then((doc) => {
       if (doc == null) {
         return res.status(400).send({ Error: "No Review with that Username" });
