@@ -1,8 +1,55 @@
-const BurgerModel = require("../models/burger.model");
 const express = require("express");
-const { json } = require("express");
 const router = express.Router();
+const BurgerModel = require("../models/burger.model");
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Review:
+ *       type: object
+ *       required:
+ *          - userName
+ *          - shop
+ *          - country
+ *          - burger
+ *          - ranking
+ *       properties:
+ *         userName:
+ *           type: string
+ *         shop:
+ *           type: string
+ *         country:
+ *           type: string
+ *         burger:
+ *           type: string
+ *         ranking:
+ *           type: number
+ *         comment:
+ *           type: string
+ *       example:
+ *          userName: Testing
+ *          country: Argentina
+ *          shop: Mcdonalds
+ *          burger: Cuarto de Libra
+ *          ranking: 80
+ *          comment: Comun
+ */
+
+// Routes
+/**
+ * @swagger
+ * /api/reviews:
+ *  get:
+ *    description: Use to request all the reviews
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *      '404':
+ *        description: Bad Request, page not Found
+ *      '500':
+ *         description: Some server error
+ */
 router.get("/api/reviews", (req, res) => {
   BurgerModel.find({})
     .select("userName shop country burger ranking comment status -_id")
@@ -14,6 +61,24 @@ router.get("/api/reviews", (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /api/review/{userName}:
+ *  get:
+ *    parameters:
+ *      - name: userName
+ *        in: path
+ *        description: Name of userName
+ *        required: true
+ *    description: Use to request one particular user review
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ *      '400':
+ *        description: Bad request, need to send valid Username
+ *      '500':
+ *         description: Some server error
+ */
 router.get("/api/review/:userName", (req, res) => {
   if (!req.params.userName) {
     return res
@@ -36,6 +101,25 @@ router.get("/api/review/:userName", (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /api/review:
+ *   post:
+ *     description: Use to to send one Burger review.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Review'
+ *     responses:
+ *       200:
+ *         description: Your review has been uploaded.
+ *       400:
+ *          description: Bad request
+ *       500:
+ *         description: Some server error(missing body attribute)
+ */
 router.post("/api/review", (req, res) => {
   let model = new BurgerModel(req.body);
   model
