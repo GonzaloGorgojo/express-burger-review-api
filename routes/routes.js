@@ -2,40 +2,6 @@ const express = require("express");
 const router = express.Router();
 const BurgerModel = require("../models/burger.model");
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Review:
- *       type: object
- *       required:
- *          - userName
- *          - shop
- *          - country
- *          - burger
- *          - ranking
- *       properties:
- *         userName:
- *           type: string
- *         shop:
- *           type: string
- *         country:
- *           type: string
- *         burger:
- *           type: string
- *         ranking:
- *           type: number
- *         comment:
- *           type: string
- *       example:
- *          userName: Testing
- *          country: Argentina
- *          shop: Mcdonalds
- *          burger: Cuarto de Libra
- *          ranking: 80
- *          comment: Comun
- */
-
 // Routes
 /**
  * @swagger
@@ -105,20 +71,41 @@ router.get("/api/review/:userName", (req, res) => {
  * @swagger
  * /api/review:
  *   post:
- *     description: Use to to send one Burger review.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Review'
+ *     description: Use to to send one Burger review (need a unique UserName).
+ *     consumes:
+ *      - application/json
+ *     parameters:
+ *      - in: body
+ *        name: review
+ *        description: The review to send.
+ *        schema:
+ *          type: object
+ *          required:
+ *            - userName
+ *            - country
+ *            - shop
+ *            - burger
+ *            - ranking
+ *          properties:
+ *            userName:
+ *              type: string
+ *            country:
+ *              type: string
+ *            shop:
+ *              type: string
+ *            burger:
+ *              type: string
+ *            ranking:
+ *              type: number
+ *            comment:
+ *              type: string
  *     responses:
- *       200:
+ *       201:
  *         description: Your review has been uploaded.
  *       400:
- *          description: Bad request
+ *          description: Bad request, missing body, Path {x} is required
  *       500:
- *         description: Some server error(missing body attribute)
+ *         description: Some server error
  */
 router.post("/api/review", (req, res) => {
   let model = new BurgerModel(req.body);
@@ -132,10 +119,29 @@ router.post("/api/review", (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(400).json(err.message);
     });
 });
 
+/**
+ * @swagger
+ * /api/review/{_id}:
+ *  put:
+ *    summary: Only Admin can do this.
+ *    parameters:
+ *      - in: path
+ *        name: _id
+ *    description: Use to Update one particular user review.
+ *    requestBody:
+ *      required: true
+ *    responses:
+ *      200:
+ *        description: The review has been updated.
+ *      400:
+ *        description: You Need to send id to update a Review.
+ *      500:
+ *        description: Some server error.
+ */
 router.put("/api/review/:_id", (req, res) => {
   if (!req.params._id) {
     return res
@@ -159,18 +165,39 @@ router.put("/api/review/:_id", (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /api/review/{_id}:
+ *  delete:
+ *    summary: Only Admin can do this.
+ *    parameters:
+ *      - in: path
+ *        name: _id
+ *    description: Use to delete one particular user review.
+ *    requestBody:
+ *      required: true
+ *    responses:
+ *      200:
+ *        description: The review has been removed.
+ *      400:
+ *        description: You Need to send id to delete a Review.
+ *      404:
+ *        description: No Review with that id.
+ *      500:
+ *        description: Some server error.
+ */
 router.delete("/api/review/:_id", (req, res) => {
   if (!req.params._id) {
     return res
       .status(400)
-      .send({ Error: "You Need to send the id to delete a Burger" });
+      .send({ Error: "You Need to send the id to delete a Review" });
   }
   BurgerModel.findOneAndRemove({
     _id: req.params._id,
   })
     .then((doc) => {
       if (doc == null) {
-        return res.status(400).send({ Error: "No Review with that id" });
+        return res.status(404).send({ Error: "No Review with that id" });
       } else {
         res.json({
           Success: `The review of User: ${doc.userName} has been removed`,
