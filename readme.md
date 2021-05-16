@@ -12,11 +12,11 @@ Front-End consuming this API => [Burger Reviews Front](https://gonzalogorgojo.gi
 - Express
 - MongoDB
 - Mongoose
-- HTML - CSS
+- Swagger
 
-### :floppy_disk: Where is this API deployed ?
+### :floppy_disk: Where i can find the documentation ?
 
-[Heroku](https://burgers-reviews.herokuapp.com/)
+You can find the documentation Here [Swagger](https://burgers-reviews.herokuapp.com/api/documentation)
 
 ### :bulb: How do i use this ?
 
