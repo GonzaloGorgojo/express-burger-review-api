@@ -31,7 +31,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use((req, res, next) => {
   res.status(404).send({
-    Error: `Bad request, the page you want to find does not exist, try https://burgers-reviews.herokuapp.com/api/documentation`,
+    Error: `Bad request, the page you want to find does not exist, try https://burger-reviews.onrender.com/api/documentation/`,
   });
 });
 

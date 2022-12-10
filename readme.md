@@ -13,19 +13,16 @@ Front-End consuming this API => [Burger Reviews Front](https://gonzalogorgojo.gi
 - MongoDB
 - Mongoose
 - Swagger
+- Deployed in [Render](https://render.com/)
 
 ### :floppy_disk: Where i can find the documentation ?
 
-You can find the documentation Here [Swagger](https://burgers-reviews.herokuapp.com/api/documentation)
+You can find the documentation Here [Swagger](https://burger-reviews.onrender.com/api/documentation/)
 
 ### :bulb: How do i use this ?
 
 Download/Clone then `NPM Install`<br>
 If u Want to use nodemon so u dont have to restart your server every single time you make a change use `NPM run start-watch`<br>
 You will need to set the Enviroment Variables with your own data.
-
-### C4 Diagram
-
-![C4 Diagram](https://github.com/GonzaloGorgojo/BurguerProject_BackEnd-API/blob/master/public/img/c4.png "C4 Diagram")
 
 #### This was made by [Gonzalo Gorgojo!](https://www.linkedin.com/in/gonzalogorgojo/), feel free to contact me for everything you need !
